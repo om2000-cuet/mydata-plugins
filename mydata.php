@@ -42,9 +42,28 @@ register_deactivation_hook( __FILE__, 'mydata_remove_table' );
 
 function show_mydata(){
 ?>
+
+<script>
+jQuery(document).ready(function(){
+
+jQuery('input[type="button"]').bind('click',function(){
+var mydata_name = jQuery('input[name="name"]').val();
+var mydata_email = jQuery('input[name="email"]').val();
+var mydata_age = jQuery('input[name="age"]').val();
+alert("hi om");
+console.log(mydata_name,mydata_email,mydata_age);
+
+});
+
+});
+
+
+</script>    
+
 <input name="name" type="text"/>
 <input name="email" type="email"/>
 <input name="age" type="text"/>
+<input type="button" value="Submit"/>
 
 <?php 
    return "Hi Om"; 
