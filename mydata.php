@@ -50,7 +50,7 @@ jQuery('input[type="button"]').bind('click',function(){
 var mydata_name = jQuery('input[name="name"]').val();
 var mydata_email = jQuery('input[name="email"]').val();
 var mydata_age = jQuery('input[name="age"]').val();
-alert("hi om");
+alert("hi om 1");
 console.log(mydata_name,mydata_email,mydata_age);
 
 });
