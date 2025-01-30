@@ -38,35 +38,47 @@ function mydata_remove_table() {
     $wpdb->query( $sql );
 }
 register_deactivation_hook( __FILE__, 'mydata_remove_table' );
-
+add_action('wp_ajax_mydata','mydata_handle');
+add_action('wp_ajax_nopriv_mydata','mydata_handle');
+function mydata_handle(){
+    echo $_POST['name']." ". $_POST['age']." ". $_POST['email'];
+ 
+}
 
 function show_mydata(){
 ?>
-
-<script>
-jQuery(document).ready(function(){
-
-jQuery('input[type="button"]').bind('click',function(){
-var mydata_name = jQuery('input[name="name"]').val();
-var mydata_email = jQuery('input[name="email"]').val();
-var mydata_age = jQuery('input[name="age"]').val();
-alert("hi om 1");
-console.log(mydata_name,mydata_email,mydata_age);
-
-});
-
-});
-
-
-</script>    
 
 <input name="name" type="text"/>
 <input name="email" type="email"/>
 <input name="age" type="text"/>
 <input type="button" value="Submit"/>
-
+<div id="showresult"></div>
 <?php 
    return "Hi Om"; 
 }
 
 add_shortcode('mydata','show_mydata');
+
+function mydata_scripts(){
+
+wp_enqueue_script('jquery');
+wp_enqueue_script('mydata-custom',
+plugins_url('js/custom.js',__FILE__),
+array('jquery'),
+'1.0.0',
+true
+);
+
+wp_localize_script(
+'mydata-custom',
+'mydataAjax',
+array(
+    'ajaxurl'=>admin_url('admin-ajax.php'),
+    'nonce' => wp_create_nonce('mydata_nonce')
+));
+
+
+
+}
+
+ add_action('wp_enqueue_scripts','mydata_scripts');
